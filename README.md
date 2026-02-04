@@ -1,10 +1,6 @@
-==============================
-KALI NETHUNTER KeX (ROOTLESS)
-FULL REBUILD + AUDIO + BROWSER SOUND
-ONE-COMMAND START / STOP
-==============================
+# KALI NETHUNTER KeX (ROOTLESS) - Complete Setup Guide
 
-TARGET:
+## TARGET:
 - Android
 - Termux
 - Kali NetHunter (rootless)
@@ -14,22 +10,30 @@ TARGET:
 - No systemd
 - VNC/KeX compatible
 
-==============================
-STEP 0 — INSTALL APPS (MANUAL)
-==============================
+---
+
+## STEP 0 – INSTALL APPS (MANUAL)
 Install from Play Store / F-Droid:
 - Termux
 - NetHunter Store
 - NetHunter KeX
 - VNC Viewer (if KeX not embedded)
 
-==============================
-STEP 1 — TERMUX BASE SETUP
-==============================
+---
 
+## STEP 1 – TERMUX BASE SETUP
+
+```bash
 pkg update -y && pkg upgrade -y
+```
+
+```bash
 pkg install -y wget curl git proot pulseaudio
+```
+
+```bash
 termux-change-repo
+```
 
 Enable:
 - Main
@@ -37,122 +41,169 @@ Enable:
 
 Restart Termux.
 
-==============================
-STEP 2 — INSTALL KALI NETHUNTER (ROOTLESS)
-==============================
+---
 
-wget -O install-nethunter-termux https://offs.ec/2MceZWr
+## STEP 2 – INSTALL KALI NETHUNTER (ROOTLESS)
+
+```bash
+wget -O install-nethunter-termux https://offse.ec/2MceZWr
+```
+
+```bash
 chmod +x install-nethunter-termux
+```
+
+```bash
 ./install-nethunter-termux
+```
 
 After install:
+```bash
 nethunter
+```
 
-==============================
-STEP 3 — FIX KALI BASE
-==============================
+---
 
+## STEP 3 – FIX KALI BASE
+
+```bash
 sudo apt update
+```
+
+```bash
 sudo apt --fix-broken install -y
+```
+
+```bash
 sudo dpkg --configure -a
+```
+
+```bash
 sudo apt upgrade -y
+```
 
-==============================
-STEP 4 — INSTALL KeX + DESKTOP + AUDIO
-==============================
+---
 
-sudo apt install -y \
-kali-desktop-xfce \
-kali-win-kex \
-dbus-x11 \
-pulseaudio pulseaudio-utils alsa-utils \
-pavucontrol \
-chromium
+## STEP 4 – INSTALL KeX + DESKTOP + AUDIO
 
-==============================
-STEP 5 — CHROMIUM AUDIO FIX (MANDATORY)
-==============================
+```bash
+sudo apt install -y kali-desktop-xfce kali-win-key dbus-x11 pulseaudio pulseaudio-utils alsa-utils pavucontrol chromium
+```
 
+---
+
+## STEP 5 – CHROMIUM AUDIO FIX (MANDATORY)
+
+```bash
 mkdir -p ~/.local/bin
-nano ~/.local/bin/chromium
+```
 
-PASTE:
+```bash
+nano ~/.local/bin/chromium
+```
+
+PASTE THIS CONTENT:
+```bash
 #!/bin/bash
 export PULSE_SERVER=127.0.0.1
-exec /usr/bin/chromium \
-  --disable-features=AudioServiceSandbox \
-  --no-sandbox "$@"
+exec /usr/bin/chromium   --disable-features=AudioServiceSandbox   --no-sandbox "$@"
+```
 
 SAVE, THEN:
 
+```bash
 chmod +x ~/.local/bin/chromium
+```
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
+
+```bash
 source ~/.bashrc
+```
 
-==============================
-STEP 6 — START AUDIO SERVER (TERMUX ONLY)
-==============================
+---
 
+## STEP 6 – START AUDIO SERVER (TERMUX ONLY)
+
+```bash
 pulseaudio --kill || true
-pulseaudio --start \
-  --exit-idle-time=-1 \
-  --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1"
+```
+
+```bash
+pulseaudio --start   --exit-idle-time=-1   --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1"
+```
 
 DO NOT CLOSE TERMUX.
 
-==============================
-STEP 7 — KALI AUDIO CONFIG
-==============================
+---
+
+## STEP 7 – KALI AUDIO CONFIG
 
 Inside Kali:
 
+```bash
 echo 'export PULSE_SERVER=127.0.0.1' >> ~/.bashrc
+```
+
+```bash
 source ~/.bashrc
+```
 
 NOTE:
 If you see:
 "User-configured server at 127.0.0.1, refusing to start"
 THIS IS CORRECT.
 
-==============================
-STEP 8 — TEST AUDIO
-==============================
+---
 
+## STEP 8 – TEST AUDIO
+
+```bash
 paplay /usr/share/sounds/alsa/Front_Center.wav
+```
 
-If sound plays → OK.
+If sound plays — OK.
 
-==============================
-STEP 9 — EASY START SCRIPT (TERMUX)
-==============================
+---
 
+## STEP 9 – EASY START SCRIPT (TERMUX)
+
+```bash
 nano ~/start-nethunter-kex.sh
+```
 
-PASTE:
+PASTE THIS CONTENT:
+```bash
 #!/data/data/com.termux/files/usr/bin/bash
 
 echo "[+] Starting PulseAudio"
 pulseaudio --kill 2>/dev/null
-pulseaudio --start \
-  --exit-idle-time=-1 \
-  --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1"
+pulseaudio --start   --exit-idle-time=-1   --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1"
 
 sleep 2
 
 echo "[+] Starting NetHunter KeX"
 nethunter -r "export PULSE_SERVER=127.0.0.1 && kex start"
+```
 
 SAVE, THEN:
 
+```bash
 chmod +x ~/start-nethunter-kex.sh
+```
 
-==============================
-STEP 10 — EASY STOP SCRIPT (TERMUX)
-==============================
+---
 
+## STEP 10 – EASY STOP SCRIPT (TERMUX)
+
+```bash
 nano ~/stop-nethunter-kex.sh
+```
 
-PASTE:
+PASTE THIS CONTENT:
+```bash
 #!/data/data/com.termux/files/usr/bin/bash
 
 echo "[-] Stopping KeX"
@@ -160,34 +211,43 @@ nethunter -r "kex stop"
 
 echo "[-] Stopping PulseAudio"
 pulseaudio --kill
+```
 
 SAVE, THEN:
 
+```bash
 chmod +x ~/stop-nethunter-kex.sh
+```
 
-==============================
-USAGE
-==============================
+---
+
+## USAGE
 
 START EVERYTHING:
+```bash
 ./start-nethunter-kex.sh
+```
 
 STOP EVERYTHING:
+```bash
 ./stop-nethunter-kex.sh
+```
 
-==============================
-RESULT
-==============================
+---
 
-✓ NetHunter KeX
-✓ XFCE Desktop
-✓ Audio working
-✓ Browser sound working
-✓ Chromium fixed
-✓ No systemd
-✓ Rebuild-safe
-✓ Works after Termux deletion
+## RESULT
 
-==============================
-END
-==============================
+✓ NetHunter KeX  
+✓ XFCE Desktop  
+✓ Audio working  
+✓ Browser sound working  
+✓ Chromium fixed  
+✓ No systemd  
+✓ Rebuild-safe  
+✓ Works after Termux deletion  
+
+---
+
+## END
+
+This setup provides a complete Kali Linux environment on Android with working audio and browser sound, all in a rootless configuration that survives rebuilds and works after Termux deletion.
