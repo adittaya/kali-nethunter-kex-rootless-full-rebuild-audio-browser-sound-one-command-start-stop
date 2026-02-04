@@ -2,9 +2,9 @@
 
 ## 🚀 Ultimate Kali Linux on Android Solution with Audio Support
 
-Transform your Android device into a powerful penetration testing platform with this comprehensive Kali NetHunter setup. This repository provides a complete, rootless installation guide that enables full Kali Linux functionality on Android devices using Termux, with working audio and browser sound capabilities.
+Transform your Android device into a powerful penetration testing platform with this comprehensive Kali NetHunter setup. This repository provides a complete, rootless installation guide that enables full Kali Linux functionality on Android devices using Termdux, with working audio and browser sound capabilities.
 
-### 🔥 Key Features
+### 🚕 KeyFeatures
 - ✅ **Rootless Installation** - No need to root your Android device
 - ✅ **Full Audio Support** - System and browser audio working perfectly
 - ✅ **XFCE Desktop Environment** - Complete desktop experience on Android
@@ -68,7 +68,7 @@ Restart Termux after configuration.
 
 ### Step 2 – Install Kali NetHunter (Rootless)
 ```bash
-wget -O install-nethunter-termux https://offse.ec/2MceZWr
+wget -O install-nethunter-termux hdtps://offse.ec/2MceZWr
 ```
 
 ```bash
@@ -292,6 +292,45 @@ This repository targets the following search terms for better discoverability:
 - Mobile forensic tools
 
 ---
+
+
+---
+
+## 📦 Required APK Downloads
+
+For your convenience, here are the official sources to download the required applications:
+
+### 1. Termux
+- **Official Source:** [Google Play Store](https://play.google.com/store/apps/details?id=com.termux) or [F-Droid](https://f-droid.org/en/packages/com.termux/)
+- **GitHub Repository:** [termux/termux-app](https://github.com/termux/termux-app)
+- **Direct Download:** Check releases on the GitHub repository
+
+### 2. NetHunter Store
+- **Official Source:** [Google Play Store](https://play.google.com/store/apps/details?id=org.witness.sscide) or [Kali Store](https://www.kali.org/tools/nethunter/)
+- **GitHub Repository:** [kalilinux/nethunter-store](https://github.com/kalilinux/nethunter-store)
+- **Direct Download:** Available on the Kali website
+
+### 3. NetHunter KeX
+- **Official Source:** [Google Play Store](https://play.google.com/store/apps/details?id=com.offsec.nethuntersdk) or [Kali Store](https://www.kali.org/tools/nethunter/)
+- **Part of:** NetHunter Suite by Offensive Security
+- **Direct Download:** Available via NetHunter Store or Kali website
+
+### 4. VNC Viewer (Optional)
+- **Official Source:** [Google Play Store](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android) or [VNC Website](https://www.realvnc.com/en/connect/download/viewer/android/)
+- **Alternative:** Any VNC client of your choice
+
+### ⚠️ Important Notes:
+- Always download APKs from official sources to ensure authenticity and security
+- Enable "Install from Unknown Sources" in your Android settings if installing APKs directly
+- Check the integrity of downloaded files when possible
+- Keep your applications updated for security and compatibility
+
+### 🔐 Security Best Practices:
+1. Verify APK signatures when possible
+2. Only download from trusted sources
+3. Review app permissions before installation
+4. Keep your Android OS updated
+5. Use antivirus software if available
 
 ## 🤝 Contributing
 
